@@ -74,7 +74,7 @@ export default class LoginPage extends Component{
           rememberMe: false,
         }),
       })
-      .then(res => res.json())
+      .then(res => res.json())      
       .then(resJson => {
         console.log(resJson)
         this.setState({
