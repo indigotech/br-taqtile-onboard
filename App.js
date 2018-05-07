@@ -3,11 +3,11 @@ import {
 } from 'react-navigation';
 
 import LoginPage from './loginPage'
-import WelcomePage from './welcomePage'
+import Users from './usersPage'
 
 const App = StackNavigator({
   Login: { screen: LoginPage },
-  Welcome: { screen: WelcomePage },
+  Welcome: { screen: Users },
 });
 
 

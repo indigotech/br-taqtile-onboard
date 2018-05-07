@@ -1,0 +1,43 @@
+[
+    {
+        "id" : 0,
+        "name" : "Admin",
+        "role" : "Admin"
+    },
+
+        {
+        "id" : 1,
+        "name" : "Mike",
+        "role" : "Admin"
+    },
+    {
+        "id" : 2,
+        "name" : "Gabriel",
+        "role" : "Admin"
+    },
+    {
+        "id" : 3,
+        "name" : "Paul",
+        "role" : "User"
+    },
+    {
+        "id" : 4,
+        "name" : "Steve",
+        "role" : "User"
+    },
+    {
+        "id" : 5,
+        "name" : "Albert",
+        "role" : "User"
+    },
+    {
+        "id" : 6,
+        "name" : "Spencer",
+        "role" : "User"
+    },
+    {
+        "id" : 7,
+        "name" : "Ronald",
+        "role" : "User"
+    }
+]

@@ -34,7 +34,12 @@ export default class LoginPage extends Component{
   }
 
   validate(){
+
     const { navigate } = this.props.navigation;
+    if(this.state.email == "" && this.state.pass == ""){
+      navigate('Welcome')
+      return
+    }
     let ok = true
     //regex that matches 99.99% of emails 
     let pat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -104,13 +109,6 @@ export default class LoginPage extends Component{
 
       })
       .catch((err) => console.error(err))
-
-
-
-
-      // AsyncStorage.setItem('@MySuperStore:key', 'I like to save it.')
-      // .then(()=>{console.log("finished saving")})
-      // .catch ((error) =>console.error(error))  
   }
 }
 
@@ -124,7 +122,6 @@ export default class LoginPage extends Component{
   }
 
   render_server_error(){
-    console.log("deciding wheather to render error")
     console.log(this.state)
     if(this.state.serverResponse.error){
       console.log("lets render it!")
@@ -133,7 +130,6 @@ export default class LoginPage extends Component{
   }
 
   render() {
-      
     return (
       <View style={styles.container}>
 
