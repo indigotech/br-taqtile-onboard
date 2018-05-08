@@ -164,9 +164,3 @@ const styles = {
       marginBottom: 10
   }
   }
-
-//   <Switch onTintColor='#0af' onValueChange={(value) => {
-//     this.setState({
-//         admin: value
-//     })
-// }} value={this.state.admin}/>

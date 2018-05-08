@@ -11,6 +11,8 @@ import {
 
 import {Input, Button, LoadingToken} from '../components/index'
 
+import Authorizer from '../authorizer'
+
 
 
 export default class LoginPage extends Component{
@@ -27,37 +29,46 @@ export default class LoginPage extends Component{
         message: ""
       }
     }
-    this.validate = this.validate.bind(this)
-    
+
+    this.Authorizer = new Authorizer(undefined)
   }
 
-  validate(){
-
-    const { navigate } = this.props.navigation;
-    if(this.state.email == "" && this.state.pass == ""){
-      navigate('Welcome')
-      return
-    }
-    let ok = true
+  validateEmail(){
     //regex that matches 99.99% of emails 
     let pat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     //check email
     if(!pat.test(this.state.email)){
-      this.setState({invalidEmail: true})
-      ok = false // flag to check both email and password validity at the same time
+        this.setState({invalidEmail: true})
+        return false
     }else{
-      this.setState({invalidEmail: false})
+        this.setState({invalidEmail: false})
+        return true
     }
 
-    //check password
-    if(this.state.pass.length < 4){
-      this.setState({invalidPassword: true})
-      ok = false;
-    }else{
-      this.setState({invalidPassword:false})
+  }
+
+  validatePassword(){
+      //check password
+      if(this.state.pass.length < 4){
+          this.setState({invalidPassword: true})
+          return false
+      }else{
+          this.setState({invalidPassword:false})
+          return true
+      }
+  }
+
+  validate(){
+
+    //break to speedup development
+    const { navigate } = this.props.navigation;
+
+    if(this.state.email == "" && this.state.pass == ""){
+      navigate('Welcome')
+      return
     }
     
-    if(ok){
+    if(this.validateEmail() && this.validatePassword()){
       console.log("enviando dados")
       // send the user forward
       this.setState({
@@ -65,7 +76,8 @@ export default class LoginPage extends Component{
           isLoading : true
         }
       })
-      fetch('https://tq-template-server-sample.herokuapp.com/authenticate', {
+
+      this.Authorizer.authFetch('https://tq-template-server-sample.herokuapp.com/authenticate', {
         method: "POST",
         headers: {
           Accept: 'application/json',
@@ -76,8 +88,7 @@ export default class LoginPage extends Component{
           password: this.state.pass,
           rememberMe: false,
         }),
-      })
-      .then(res => res.json())      
+      })    
       .then(resJson => {
         console.log(resJson)
         this.setState({
@@ -96,11 +107,11 @@ export default class LoginPage extends Component{
         if(data){//sucess from server response
           //saving the user name 
           AsyncStorage.setItem("user_name", data.user.name)
-          .catch((error) => console.error(error))
+          .catch(console.error)
   
           // //saving the token
           AsyncStorage.setItem("token", data.token)
-          .catch((error) => console.error(error))
+          .catch(console.error)
             
           navigate('Welcome')
         }
@@ -116,7 +127,7 @@ export default class LoginPage extends Component{
         <LoadingToken >Loading... </LoadingToken>
       )
     }
-    return < Button onPress={this.validate}>Login</Button>
+    return < Button onPress={()=>this.validate()}>Login</Button>
   }
 
   render_server_error(){

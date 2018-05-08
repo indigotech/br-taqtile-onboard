@@ -44,15 +44,17 @@ export default class Detail extends Component{
     render(){
         ({container, primary, secondary, terciary, header} = styles)
         return (
-        <View style = {container}>
-            <View style={header}>
-                <Text style = {primary}>{this.state.user.name}</Text>
+        <View style={{backgroundColor: '#dddddd', flex: 1}}>
+            <View style = {container}>
+                <View style={header}>
+                    <Text style = {primary}>{this.state.user.name}</Text>
+                </View>
+                
+                <Text style = {terciary}>{this.state.user.role}</Text>
+                <Text style = {secondary}>{this.state.user.email}</Text>
+                <Text style={terciary}>Created:</Text>
+                <Text style={secondary}> {this.parseDate()}</Text>
             </View>
-            
-            <Text style = {terciary}>{this.state.user.role}</Text>
-            <Text style = {secondary}>{this.state.user.email}</Text>
-            <Text style={terciary}>Created:</Text>
-            <Text style={secondary}> {this.parseDate()}</Text>
         </View>
         )
             

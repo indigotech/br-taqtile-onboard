@@ -37,7 +37,7 @@ export default class UsersPage extends Component{
     }
     render(){
         return(
-            <View>
+            <View style={{backgroundColor: '#dddddd' }}>
                 <FlatList
                 data={this.state.data}
                 renderItem={({item}) => <UserCard name={item.name} role={item.role} onClick={()=>this.props.navigation.navigate("Detail", {id: item.id})}/>}

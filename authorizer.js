@@ -14,8 +14,8 @@ export default class Authorizer{
         console.log("url passed:", url)
         console.log("here this is ", this)
         return fetch(url, opt)
-                .then(data => {
-                    if(data.status == 200) return data.json()
+                .then(data => {//let through status 2xx and 401
+                    if((data.status >=200 && data.status < 300) || data.status==401) return data.json()
                     else throw new Error("server returned status " + data.status)
                 })
                 .then(dataJson => {
