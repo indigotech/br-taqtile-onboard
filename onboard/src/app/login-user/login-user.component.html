@@ -1,0 +1,25 @@
+<mat-card style="width: 50%; margin: auto"  >
+  <img mat-card-image src="https://i.imgur.com/GCGwPEn.png">
+  <mat-card-header>
+    <h2 style="margin: auto;">OnBoard</h2>
+  </mat-card-header>
+
+  <div class="stack-container">
+    <mat-form-field style="margin-bottom: 10px;">
+      <input matInput placeholder="E-mail" [formControl]="emailControl" required>
+      <mat-error *ngIf="emailControl.invalid">{{getEmailErrorMsg()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Senha" [type]="hidePassword ? 'password' : 'text'" [formControl]="passwordControl" required>
+      <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+      <mat-error *ngIf="passwordControl.invalid">{{getPasswordErrorMsg()}} </mat-error>
+    </mat-form-field>
+
+    <span class="login-span">Não tem uma conta? Cadastre-se aqui</span>
+  </div>
+
+  <mat-card-actions align="end">
+    <button mat-button color="accent" (click)="onLogin()">Entrar</button>
+  </mat-card-actions>
+</mat-card>
