@@ -2,8 +2,8 @@ import {
   StackNavigator,
 } from 'react-navigation';
 
-import LoginPage from './loginPage'
-import Users from './usersPage'
+import LoginPage from './pages/loginPage'
+import Users from './pages/usersPage'
 
 const App = StackNavigator({
   Login: { screen: LoginPage },

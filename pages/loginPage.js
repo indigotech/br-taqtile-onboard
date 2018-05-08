@@ -9,9 +9,7 @@ import {
 } from 'react-native';
 //import firebase from 'firebase'
 
-import Input from './Input'
-import Button from './Button'
-import LoadingToken from './LoadingToken'
+import {Input, Button, LoadingToken} from '../components/index'
 
 
 
@@ -67,7 +65,7 @@ export default class LoginPage extends Component{
           isLoading : true
         }
       })
-      fetch('https://tq-template-node.herokuapp.com/authenticate', {
+      fetch('https://tq-template-server-sample.herokuapp.com/authenticate', {
         method: "POST",
         headers: {
           Accept: 'application/json',

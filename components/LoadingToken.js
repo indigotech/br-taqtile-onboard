@@ -2,7 +2,7 @@ import React from 'react'
 import {View, ActivityIndicator, StyleSheet} from 'react-native'
 
 
-export default class LoadingToken extends React.Component{
+class LoadingToken extends React.Component{
 
     render(){
         return (
@@ -23,3 +23,6 @@ const styles = StyleSheet.create({
         marginBottom: 7
     }
   });
+
+
+  export {LoadingToken}

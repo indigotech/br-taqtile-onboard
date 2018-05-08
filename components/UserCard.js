@@ -9,7 +9,7 @@ import Input from './Input'
 import Button from './Button'
 import LoadingToken from './LoadingToken'
 
-export default class UserCard extends Component{
+class UserCard extends Component{
     render(){
         return(
             <View style={styles.container}>
@@ -42,3 +42,5 @@ const styles = {
         borderRadius: 10    
     }
 }
+
+export {UserCard}
