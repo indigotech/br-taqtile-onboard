@@ -12,14 +12,16 @@ export default class Authorizer{
         opt.headers.Authorization = (opt.headers && opt.headers.Authorization) || this.token
         console.log("options received", opt.headers)
         console.log("url passed:", url)
+        console.log("here this is ", this)
         return fetch(url, opt)
-        .then(data => {
-            if(data.status == 200) return data.json()
-        })
-        .then(dataJson => {
-            this.token = dataJson.token
-            return dataJson
-        })
+                .then(data => {
+                    if(data.status == 200) return data.json()
+                    else throw new Error("server returned status " + data.status)
+                })
+                .then(dataJson => {
+                    this.token = dataJson.token
+                    return dataJson
+                })
     }
 
     setToken(token){

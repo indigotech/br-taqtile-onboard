@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {
  View, 
- Text
+ Text,
+ TouchableOpacity
 } from 'react-native';
 //import firebase from 'firebase'
 
@@ -12,10 +13,12 @@ import LoadingToken from './LoadingToken'
 class UserCard extends Component{
     render(){
         return(
-            <View style={styles.container}>
-                <Text style={styles.nameStyle}>{this.props.name}</Text>
-                <Text style ={styles.roleStyle}>{this.props.role}</Text>
-            </View>
+            <TouchableOpacity onPress={this.props.onClick}>
+                <View style={styles.container}>
+                    <Text style={styles.nameStyle}>{this.props.name}</Text>
+                    <Text style ={styles.roleStyle}>{this.props.role}</Text>
+                </View>
+            </TouchableOpacity>
         )
     }
 }
@@ -39,7 +42,11 @@ const styles = {
         backgroundColor: '#f0f0f0',
         paddingTop: 30,
         paddingBottom : 30,
-        borderRadius: 10    
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 5, height: 5 },
+        shadowOpacity: 0.3,
+        shadowRadius: 2,    
     }
 }
 

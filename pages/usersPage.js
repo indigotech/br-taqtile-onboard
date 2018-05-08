@@ -28,10 +28,10 @@ export default class UsersPage extends Component{
         AsyncStorage.getItem("token")
         .then(token => {
             this.Authorizer.setToken(token)
-            console.log(this.Authorizer.authFetch(url, {method : "GET"})
+            return this.Authorizer.authFetch(url, {method : "GET"})
             .then(data => this.setState({
                 data: data.data
-            })))
+            }))
         })
         .catch(console.log)
     }
@@ -40,7 +40,7 @@ export default class UsersPage extends Component{
             <View>
                 <FlatList
                 data={this.state.data}
-                renderItem={({item}) => <UserCard name={item.name} role={item.role}/>}
+                renderItem={({item}) => <UserCard name={item.name} role={item.role} onClick={()=>this.props.navigation.navigate("Detail", {id: item.id})}/>}
                 keyExtractor={(item, index) => item.id.toString()}
                 />
             </View>
