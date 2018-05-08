@@ -155,10 +155,11 @@ export default class LoginPage extends Component{
         <View style={styles.buttonCenter}>
           
           {this.render_loading()}
+          <Button linkLike onPress={() => this.props.navigation.navigate("SignUp")}> Sign Up </Button>
         </View>
 
         {this.render_server_error()}
-
+        
         
       </View>
     );
