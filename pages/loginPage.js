@@ -11,7 +11,7 @@ import {
 
 import {Input, Button, LoadingToken} from '../components/index'
 
-import Authorizer from '../authorizer'
+import authFetch from '../authorizer'
 
 
 
@@ -29,8 +29,6 @@ export default class LoginPage extends Component{
         message: ""
       }
     }
-
-    this.Authorizer = new Authorizer(undefined)
   }
 
   validateEmail(){
@@ -77,7 +75,7 @@ export default class LoginPage extends Component{
         }
       })
 
-      this.Authorizer.authFetch('https://tq-template-server-sample.herokuapp.com/authenticate', {
+      authFetch('https://tq-template-server-sample.herokuapp.com/authenticate', {
         method: "POST",
         headers: {
           Accept: 'application/json',
@@ -108,16 +106,12 @@ export default class LoginPage extends Component{
           //saving the user name 
           AsyncStorage.setItem("user_name", data.user.name)
           .catch(console.error)
-  
-          // //saving the token
-          AsyncStorage.setItem("token", data.token)
-          .catch(console.error)
             
           navigate('Welcome')
         }
 
       })
-      .catch((err) => console.error(err))
+      .catch(console.error)
   }
 }
 

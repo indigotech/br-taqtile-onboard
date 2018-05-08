@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Text, AsyncStorage, View} from 'react-native'
 
-import Authorizer from '../authorizer'
+import authFetch from '../authorizer'
 
 export default class Detail extends Component{
     constructor(props){
@@ -10,23 +10,20 @@ export default class Detail extends Component{
         this.id = this.props.navigation.getParam('id', undefined)
         const url = "https://tq-template-server-sample.herokuapp.com/users/" + this.id.toString()
         this.state={
-            user :{}
+            user :{
+                name: "        ",
+                email: "       ",
+                role: "         "
+            }
         }
 
-        this.Authorizer = new Authorizer()
-
-        AsyncStorage.getItem("token")
-        .then(token =>{
-            this.Authorizer.setToken(token)
-            this.Authorizer.authFetch(url, {
-                method: "GET"
+        authFetch(url, {
+            method: "GET"
+        })
+        .then(user => {
+            this.setState({
+                user: user.data
             })
-            .then(user => {
-                this.setState({
-                    user: user.data
-                })
-            })
-            .catch(console.log)
         })
         .catch(console.log)
         
@@ -40,6 +37,8 @@ export default class Detail extends Component{
         date = date[1] + ' / ' + date[2] + ' / ' + date[0]
         return date
     }
+
+    
 
     render(){
         ({container, primary, secondary, terciary, header} = styles)

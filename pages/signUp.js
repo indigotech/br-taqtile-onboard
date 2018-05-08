@@ -75,9 +75,16 @@ export default class SignUp extends Component{
         console.log(this)
         if(this.validate()){
             //send data
-            //let url = "";
+            let url = "https://tq-template-server-sample.herokuapp.com/users";
+            let options= {
+                method: "POST",
+                headers:{
+                    "Content-Type" : "application/json"
+                }
+            }
 
-            //this.Authorizer.authFetch()
+            this.Authorizer.authFetch(url, options)
+            .then()
         }
     }
 
@@ -128,9 +135,14 @@ export default class SignUp extends Component{
 
 
                 <View style={styles.buttonCenter}>
-                    <LabeledSwitch offLabel="Default" onLabel="Admin" onTintColor='#0af' value={this.state.admin} onValueChange={
-                    (value) => this.setState({
-                            admin: value
+                    <LabeledSwitch 
+                        offLabel="Default" 
+                        onLabel="Admin" 
+                        onTintColor='#0af' 
+                        value={this.state.admin} 
+                        onValueChange={
+                            (value) => this.setState({
+                                    admin: value
                         })
                     }/>
                     {this.render_loading()}
