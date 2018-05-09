@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 //Angular Material imports
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatCardModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatIconModule, MatProgressSpinnerModule, MatCheckboxModule } from '@angular/material';
+import { MatCardModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatIconModule, MatProgressSpinnerModule, MatCheckboxModule, MatSnackBarModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { LoginUserComponent } from './login-user/login-user.component';
@@ -27,7 +27,8 @@ import { LoginUserComponent } from './login-user/login-user.component';
     ReactiveFormsModule,
     MatProgressSpinnerModule,
     MatCheckboxModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

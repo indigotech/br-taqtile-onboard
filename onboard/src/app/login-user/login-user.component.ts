@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import { LoginService } from '../../api/LoginService';
+import { MatSnackBar } from '@angular/material'
+import { UserLoginErrorResponse } from '../../api/response/UserLoginResponseError';
+import { UserLoginResponse } from '../../api/response/UserLoginResponse';
 
 @Component({
   selector: 'app-login-user',
@@ -21,7 +24,7 @@ export class LoginUserComponent implements OnInit {
     rememberMe: this.rememberMe
   };
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -46,7 +49,21 @@ export class LoginUserComponent implements OnInit {
     }
     
     this.loggingIn = true;
-    this.loginService.onLoginComplete = () => { this.loggingIn = false; }
-    this.loginService.login(this.user);
+    this.loginService.login(this.user).subscribe(
+      response => { this.onLoginSuccess(response) },
+      error => { this.onLoginError(error) }
+    );
+  }
+
+  onLoginSuccess(response: UserLoginResponse) {
+    console.log("success");
+    localStorage.setItem("localUser", JSON.stringify(response.data.user));
+    localStorage.setItem("localUserToken", response.data.token);
+    this.loggingIn = false;
+  }
+
+  onLoginError(errorResponse) {
+    this.snackBar.open(errorResponse.error.errors[0].message);
+    this.loggingIn = false;    
   }
 }

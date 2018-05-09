@@ -18,11 +18,11 @@
 
     <mat-checkbox [(ngModel)]="user.rememberMe">Permanecer conectado</mat-checkbox>
 
-    <span class="login-span" style="margin-top: 2em">Não tem uma conta? Cadastre-se aqui</span>
+    <span class="login-span" style="margin-top: 2em; color: #757575">Não tem uma conta? Cadastre-se aqui</span>
   </div>
 
   <mat-card-actions align="end">
     <mat-progress-spinner diameter="30" mode="indeterminate" *ngIf="loggingIn"></mat-progress-spinner>
-    <button mat-button color="accent" (click)="onBtnLoginClick()">{{loggingIn ? "Entrando..." : "Entrar"}}</button>
+    <button mat-button color="accent" (click)="onBtnLoginClick()">{{loggingIn ? "Entrando..." : "ENTRAR"}}</button>
   </mat-card-actions>
 </mat-card>
