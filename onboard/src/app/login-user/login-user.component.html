@@ -6,20 +6,23 @@
 
   <div class="stack-container">
     <mat-form-field style="margin-bottom: 10px;">
-      <input matInput placeholder="E-mail" [formControl]="emailControl" required>
-      <mat-error *ngIf="emailControl.invalid">{{getEmailErrorMsg()}}</mat-error>
+      <input matInput [(ngModel)]="user.email" placeholder="E-mail" [formControl]="emailControl">
+      <mat-error *ngIf="emailError">{{getEmailErrorMsg()}}</mat-error>
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput placeholder="Senha" [type]="hidePassword ? 'password' : 'text'" [formControl]="passwordControl" required>
+      <input matInput [(ngModel)]="user.password" placeholder="Senha" [type]="hidePassword ? 'password' : 'text'" [formControl]="passwordControl">
       <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
-      <mat-error *ngIf="passwordControl.invalid">{{getPasswordErrorMsg()}} </mat-error>
+      <mat-error *ngIf="passwordError">{{getPasswordErrorMsg()}} </mat-error>
     </mat-form-field>
 
-    <span class="login-span">Não tem uma conta? Cadastre-se aqui</span>
+    <mat-checkbox [(ngModel)]="user.rememberMe">Permanecer conectado</mat-checkbox>
+
+    <span class="login-span" style="margin-top: 2em">Não tem uma conta? Cadastre-se aqui</span>
   </div>
 
   <mat-card-actions align="end">
-    <button mat-button color="accent" (click)="onLogin()">Entrar</button>
+    <mat-progress-spinner diameter="30" mode="indeterminate" *ngIf="loggingIn"></mat-progress-spinner>
+    <button mat-button color="accent" (click)="onBtnLoginClick()">{{loggingIn ? "Entrando..." : "Entrar"}}</button>
   </mat-card-actions>
 </mat-card>
