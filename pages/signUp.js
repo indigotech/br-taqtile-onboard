@@ -1,33 +1,35 @@
+;
 import React, {Component} from 'react'
 import {Text, View, Switch} from 'react-native'
 import {Input, LoadingToken, Button, LabeledSwitch} from '../components/index'
 
-import Authorizer from '../authorizer'
+import authFetch from '../authorizer'
 
 
 export default class SignUp extends Component{
     constructor(props){
-        super(props)
+        super(props);
+        ({getParam} = props.navigation)
         this.state={
-            name: '',
-            admin: false,
-            email: '',
-            pass: '',
+            name: getParam("name", ""), // this.props.name,
+            admin: (getParam("admin", false) === 'admin'), //this.props.admin,
+            email: getParam("email", ""), //this.props.email,
+            pass: getParam("password", ""), //this.props.password,
             invalidEmail: false,
             invalidPassword: false,
             invalidName: false,
             serverResponse: {
-              isLoading: false,
-              error: false,
-              message: ""
-            }
+                isLoading: false,
+                error: false,
+                message: ""
+            },
+            modify : (getParam("modify", false) != undefined)
         }
-        this.Authorizer = new Authorizer();
     }
 
     //each of them is responsible for checking the validity, setting it onto the state and returning it
     validateName(){
-        let pat = /^[A-z]+$/
+        let pat = /^[A-z ]+$/
         if(!pat.test(this.state.name)){
             this.setState({
                 invalidName: true
@@ -76,33 +78,60 @@ export default class SignUp extends Component{
         if(this.validate()){
             //send data
             let url = "https://tq-template-server-sample.herokuapp.com/users";
+            let bodyStr = JSON.stringify({
+                name: this.state.name,
+                password: this.state.pass,
+                role: (this.state.admin?'admin':'user'),
+                email: this.state.email
+            })
+
+            console.log(bodyStr)
+
             let options= {
                 method: "POST",
                 headers:{
                     "Content-Type" : "application/json"
-                }
+                },
+                body: bodyStr
             }
 
-            this.Authorizer.authFetch(url, options)
-            .then()
+            if(this.state.modify){
+                options.method =  'PUT'
+            }
+
+            authFetch(url, options)
+            .then(res => {console.log(res); this.props.navigation.navigate('welcome')})
+            .catch(console.log)
         }
     }
 
+    //decide if it is loading, editing or creating and renders the button appropriately 
     render_loading(){
         if(this.state.serverResponse.isLoading){
           return (
             <LoadingToken >Loading... </LoadingToken>
           )
+        }else if (this.state.modify){
+            return <Button onPress={()=>this.sendData()}>Finish</Button>
         }
         return < Button onPress={()=>this.sendData()}>Sign Up</Button>
-      }
+      
+    }
+
+    renderTitle(){
+        if(this.state.modify){
+            return <Text style={title}>Edit User</Text>
+        }
+        return <Text style={title}> Sign Up! </Text>
+    }
+
 
     render(){
         ({container, title, switchLabel} = styles)
         console.log(this.state)
         return(
             <View style={container}>
-                <Text style={title}> Sign Up! </Text>
+                {this.renderTitle()}}
                 <Input 
                     label="Name"
                     onChangeText={(text) => this.setState({name: text})}

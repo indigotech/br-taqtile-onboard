@@ -3,6 +3,8 @@ import {Text, AsyncStorage, View} from 'react-native'
 
 import authFetch from '../authorizer'
 
+import {Button} from '../components/index'
+
 export default class Detail extends Component{
     constructor(props){
         super(props)
@@ -11,9 +13,9 @@ export default class Detail extends Component{
         const url = "https://tq-template-server-sample.herokuapp.com/users/" + this.id.toString()
         this.state={
             user :{
-                name: "        ",
-                email: "       ",
-                role: "         "
+                name: "",
+                email: "",
+                role: ""
             }
         }
 
@@ -37,16 +39,27 @@ export default class Detail extends Component{
         date = date[1] + ' / ' + date[2] + ' / ' + date[0]
         return date
     }
-
     
 
     render(){
-        ({container, primary, secondary, terciary, header} = styles)
+        ({container, primary, secondary, terciary, header, buttonContainer} = styles)
         return (
         <View style={{backgroundColor: '#dddddd', flex: 1}}>
             <View style = {container}>
                 <View style={header}>
+                    
                     <Text style = {primary}>{this.state.user.name}</Text>
+                    
+                    <Button
+                        linkLike
+                        color='white'
+                        onPress={() => this.props.navigation.navigate("SignUp", {
+                            name: this.state.user.name,
+                            email: this.state.user.email,
+                            admin: this.state.user.role
+                        })}
+                    >Edit</Button>   
+
                 </View>
                 
                 <Text style = {terciary}>{this.state.user.role}</Text>
@@ -108,6 +121,13 @@ const styles = {
         marginTop: -30,
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
-        marginBottom: 20
+        marginBottom: 20,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'baseline'
+    },
+    buttonContainer: {
+
     }
 }
