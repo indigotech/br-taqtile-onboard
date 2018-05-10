@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { UserLoginResponse } from "./response/UserLoginResponse";
-import { UserLoginErrorResponse } from "./response/UserLoginResponseError";
 import { HttpClient } from "@angular/common/http";
 import { Globals } from "../app/globals";
 
@@ -9,12 +8,17 @@ import { Globals } from "../app/globals";
     providedIn: 'root'
 })
 export class LoginService {
-    private readonly LOGIN_URL: string;
+    private readonly loginUrl: string;
     constructor(private httpClient: HttpClient, private globals: Globals){
-        this.LOGIN_URL = globals.API_URL + "/authenticate";
+        this.loginUrl = globals.apiUrl + "/authenticate";
     }
 
     login(body) {
-        return this.httpClient.post<UserLoginResponse>(this.LOGIN_URL, body);
+        return this.httpClient.post<UserLoginResponse>(this.loginUrl, body);
+    }
+
+    isLoggedIn(): boolean {
+        console.log("isLoggedIn?", localStorage[this.globals.localUserKey] != null);
+        return localStorage[this.globals.localUserKey] != null;
     }
 }

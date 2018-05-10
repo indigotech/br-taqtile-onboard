@@ -1,15 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
-.stack-container {
-    display: flex;
-    flex-direction: column;
-  }
-  
-.stack-container > * {
-    width: 100%;
-}
-
 .login-span {
-    color: lightgray;
+    color: "#717171";
     font-size: 12px;
 }

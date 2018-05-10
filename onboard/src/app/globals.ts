@@ -4,6 +4,9 @@ import { Injectable } from "@angular/core";
     providedIn: "root"
 })
 export class Globals {
-    readonly API_URL = "https://tq-template-server-sample.herokuapp.com";
-    readonly SNACKBAR_DURATION = 1500;
+    readonly appName = "Onboard"
+    readonly apiUrl = "https://tq-template-server-sample.herokuapp.com";
+    readonly snackbarDuration = 1500;
+    readonly localUserKey = "localUser";
+    readonly localUserTokenKey = "localUserToken";
 }

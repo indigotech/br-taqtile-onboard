@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material'
 import { UserLoginErrorResponse } from '../../api/response/UserLoginResponseError';
 import { UserLoginResponse } from '../../api/response/UserLoginResponse';
 import { Globals } from '../globals';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-user',
@@ -28,7 +29,8 @@ export class LoginUserComponent implements OnInit {
   constructor(
     private loginService: LoginService, 
     private snackBar: MatSnackBar,
-    private globals: Globals
+    private globals: Globals,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -37,7 +39,7 @@ export class LoginUserComponent implements OnInit {
   getEmailErrorMsg() {
     return this.emailControl.hasError('required') ? 'Digite seu e-mail' :
         this.emailControl.hasError('email') ? 'E-mail inválido' :
-            '';
+        '';
   }
 
   getPasswordErrorMsg() {
@@ -45,7 +47,6 @@ export class LoginUserComponent implements OnInit {
   }
 
   login() {
-    console.log("login");
     this.emailError = this.emailControl.invalid;
     this.passwordError = this.passwordControl.invalid;
 
@@ -62,14 +63,13 @@ export class LoginUserComponent implements OnInit {
   }
 
   onLoginSuccess(response: UserLoginResponse) {
-    console.log("success");
-    localStorage.setItem("localUser", JSON.stringify(response.data.user));
-    localStorage.setItem("localUserToken", response.data.token);
-    this.loggingIn = false;
+    localStorage.setItem(this.globals.localUserKey, JSON.stringify(response.data.user));
+    localStorage.setItem(this.globals.localUserTokenKey, response.data.token);
+    this.router.navigateByUrl("/users");
   }
 
   onLoginError(errorResponse) {
-    this.snackBar.open(errorResponse.error.errors[0].message, null, {duration: this.globals.SNACKBAR_DURATION});
+    this.snackBar.open(errorResponse.error.errors[0].message, null, {duration: this.globals.snackbarDuration});
     this.loggingIn = false;    
   }
 }
