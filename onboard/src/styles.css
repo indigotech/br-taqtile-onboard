@@ -4,3 +4,14 @@
 body {
     background: lightslategray;
 }
+
+.centered-card {
+    width: 50%;
+    margin: auto;
+    margin-top: 2em;
+}
+
+.fullpage-card {
+    width: 90%;
+    margin: auto
+}

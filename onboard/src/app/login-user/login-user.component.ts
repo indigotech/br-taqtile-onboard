@@ -4,6 +4,7 @@ import { LoginService } from '../../api/LoginService';
 import { MatSnackBar } from '@angular/material'
 import { UserLoginErrorResponse } from '../../api/response/UserLoginResponseError';
 import { UserLoginResponse } from '../../api/response/UserLoginResponse';
+import { Globals } from '../globals';
 
 @Component({
   selector: 'app-login-user',
@@ -24,7 +25,11 @@ export class LoginUserComponent implements OnInit {
     rememberMe: this.rememberMe
   };
 
-  constructor(private loginService: LoginService, private snackBar: MatSnackBar) { }
+  constructor(
+    private loginService: LoginService, 
+    private snackBar: MatSnackBar,
+    private globals: Globals
+  ) { }
 
   ngOnInit() {
   }
@@ -39,7 +44,8 @@ export class LoginUserComponent implements OnInit {
     return this.passwordControl.hasError('required') ? 'Digite sua senha' : '';
   }
 
-  onBtnLoginClick() {
+  login() {
+    console.log("login");
     this.emailError = this.emailControl.invalid;
     this.passwordError = this.passwordControl.invalid;
 
@@ -63,7 +69,7 @@ export class LoginUserComponent implements OnInit {
   }
 
   onLoginError(errorResponse) {
-    this.snackBar.open(errorResponse.error.errors[0].message);
+    this.snackBar.open(errorResponse.error.errors[0].message, null, {duration: this.globals.SNACKBAR_DURATION});
     this.loggingIn = false;    
   }
 }
