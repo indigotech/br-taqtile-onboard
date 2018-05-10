@@ -7,13 +7,9 @@ import {
   TextInput,
   AsyncStorage
 } from 'react-native';
-//import firebase from 'firebase'
 
 import {Input, Button, LoadingToken} from '../components/index'
-
 import authFetch from '../authorizer'
-
-
 
 export default class LoginPage extends Component{
   constructor(props){

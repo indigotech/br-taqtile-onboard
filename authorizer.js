@@ -25,7 +25,7 @@ export default async function authFetch(url, options) {
         throw new Error("server returned status " + rawResponse.status);
     }
 
-    if (response.data.token) { 
+    if (rawResponse.status != 401 && response.data.token) { 
         await AsyncStorage.setItem("token", response.data.token);
     }
 
