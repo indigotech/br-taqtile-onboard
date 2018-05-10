@@ -19,8 +19,8 @@ export default class LoginPage extends Component{
   constructor(props){
     super(props);
     this.state={
-      email: '',
-      pass: '',
+      email: 'admin@taqtile.com',
+      pass: '1111',
       invalidEmail: false,
       invalidPassword: false,
       serverResponse: {
@@ -125,7 +125,6 @@ export default class LoginPage extends Component{
   }
 
   render_server_error(){
-    console.log(this.state)
     if(this.state.serverResponse.error){
       console.log("lets render it!")
       return <Text style={styles.errorMessage}>{this.state.serverResponse.errorMessage}</Text>
@@ -160,7 +159,6 @@ export default class LoginPage extends Component{
         <View style={styles.buttonCenter}>
           
           {this.render_loading()}
-          <Button linkLike onPress={() => this.props.navigation.navigate("SignUp")}> Sign Up </Button>
         </View>
 
         {this.render_server_error()}

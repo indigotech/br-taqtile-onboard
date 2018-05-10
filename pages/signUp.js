@@ -4,6 +4,7 @@ import {Text, View, Switch} from 'react-native'
 import {Input, LoadingToken, Button, LabeledSwitch} from '../components/index'
 
 import authFetch from '../authorizer'
+import Events from '../event'
 
 
 export default class SignUp extends Component{
@@ -15,6 +16,7 @@ export default class SignUp extends Component{
             admin: (getParam("admin", false) === 'admin'), //this.props.admin,
             email: getParam("email", ""), //this.props.email,
             pass: getParam("password", ""), //this.props.password,
+            id: getParam("id", undefined),
             invalidEmail: false,
             invalidPassword: false,
             invalidName: false,
@@ -23,7 +25,7 @@ export default class SignUp extends Component{
                 error: false,
                 message: ""
             },
-            modify : (getParam("modify", false) != undefined)
+            modify : (getParam("name", undefined) != undefined)
         }
     }
 
@@ -70,11 +72,13 @@ export default class SignUp extends Component{
 
 
     validate(){
+        if(this.state.modify) return this.validateName() && this.validateEmail()
+
         return (this.validateName() && this.validateEmail() && this.validatePassword())
     }
 
     sendData(){
-        console.log(this)
+        console.log("sending data")
         if(this.validate()){
             //send data
             let url = "https://tq-template-server-sample.herokuapp.com/users";
@@ -96,11 +100,13 @@ export default class SignUp extends Component{
             }
 
             if(this.state.modify){
-                options.method =  'PUT'
-            }
+                options.method =  'PUT';
+                url = url + '/' + this.state.id.toString()
 
+            }
+            console.log("post or put in ", url)
             authFetch(url, options)
-            .then(res => {console.log(res); this.props.navigation.navigate('welcome')})
+            .then(res => {console.log(res); Events.publish("userListChanged");this.props.navigation.navigate('Welcome')})
             .catch(console.log)
         }
     }
@@ -111,23 +117,38 @@ export default class SignUp extends Component{
           return (
             <LoadingToken >Loading... </LoadingToken>
           )
-        }else if (this.state.modify){
-            return <Button onPress={()=>this.sendData()}>Finish</Button>
         }
-        return < Button onPress={()=>this.sendData()}>Sign Up</Button>
-      
+        return <Button onPress={()=>this.sendData()}>Finish</Button>
     }
 
     renderTitle(){
+        console.log("modifify:", this.state.modify)
         if(this.state.modify){
             return <Text style={title}>Edit User</Text>
         }
-        return <Text style={title}> Sign Up! </Text>
+        return <Text style={title}>Create User</Text>
+    }
+
+    renderPasswordField(){
+        if(!this.state.modify){
+            return(
+                <Input
+                label="Password"
+                secureTextEntry={true}
+                onChangeText={(text) => this.setState({pass: text})}
+                value={this.state.pass}
+                placeholder='password'
+                invalid={this.state.invalidPassword}
+                errorMessage = "Password is too short"
+                />
+            )
+        }
+        return undefined
     }
 
 
     render(){
-        ({container, title, switchLabel} = styles)
+        ({container, title, switchLabel, center} = styles)
         console.log(this.state)
         return(
             <View style={container}>
@@ -151,29 +172,23 @@ export default class SignUp extends Component{
                     errorMessage = "Invalid email address!"
                 />
     
-                <Input
-                    label="Password"
-                    secureTextEntry={true}
-                    onChangeText={(text) => this.setState({pass: text})}
-                    value={this.state.pass}
-                    placeholder='password'
-                    invalid={this.state.invalidPassword}
-                    errorMessage = "Password is too short"
-                />
 
 
+                {this.renderPasswordField()}
 
-                <View style={styles.buttonCenter}>
+                <View style={center}>
                     <LabeledSwitch 
-                        offLabel="Default" 
-                        onLabel="Admin" 
-                        onTintColor='#0af' 
-                        value={this.state.admin} 
-                        onValueChange={
-                            (value) => this.setState({
-                                    admin: value
-                        })
-                    }/>
+                            offLabel="Default" 
+                            onLabel="Admin" 
+                            onTintColor='#0af' 
+                            value={this.state.admin} 
+                            onValueChange={
+                                (value) => this.setState({
+                                        admin: value
+                                })
+                            }
+                        />
+
                     {this.render_loading()}
                 </View>
           </View>
@@ -196,7 +211,7 @@ const styles = {
       marginTop: 60,
       marginBottom: 30
     },
-    buttonCenter: {
+    center: {
       justifyContent: "center",
         alignItems: 'center',
     },

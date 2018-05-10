@@ -29,7 +29,7 @@ class Button extends Component{
         return(
             <TouchableOpacity style={this.createStyle()} onPress={this.props.onPress}>
                 <Text style={this.createTextStyle()}>
-                    {this.props.children}
+                    {this.props.title||this.props.children}
                 </Text>
             </TouchableOpacity>
         )
