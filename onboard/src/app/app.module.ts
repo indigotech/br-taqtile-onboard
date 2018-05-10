@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
 //Angular Material imports
@@ -13,6 +13,7 @@ import { LoginUserComponent } from './login-user/login-user.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HeaderComponent } from './header/header.component';
+import { WebInterceptor } from '../api/WebInterceptor';
 
 const appRoutes: Routes = [
   { path: '', component: LoginUserComponent },  
@@ -29,10 +30,7 @@ const appRoutes: Routes = [
     HeaderComponent
   ],
   imports: [
-    RouterModule.forRoot(
-      appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
-    ),
+    RouterModule.forRoot(appRoutes),
     BrowserModule,
     MatCardModule,
     MatButtonModule,
@@ -46,9 +44,15 @@ const appRoutes: Routes = [
     MatCheckboxModule,
     HttpClientModule,
     MatSnackBarModule,
-    MatToolbarModule
+    MatToolbarModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: WebInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

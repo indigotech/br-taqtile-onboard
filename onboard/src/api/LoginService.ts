@@ -17,8 +17,16 @@ export class LoginService {
         return this.httpClient.post<UserLoginResponse>(this.loginUrl, body);
     }
 
+    getLocalUser() {
+        return localStorage[this.globals.localUserKey];
+    }
+
+    getLocalUserToken() {
+        return localStorage[this.globals.localUserTokenKey];        
+    }
+
     isLoggedIn(): boolean {
-        console.log("isLoggedIn?", localStorage[this.globals.localUserKey] != null);
-        return localStorage[this.globals.localUserKey] != null;
+        console.log("isLoggedIn?", this.getLocalUser() != null);
+        return this.getLocalUser() != null;
     }
 }

@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 .centered-card {
     width: 50%;
@@ -7,9 +8,19 @@
     margin-top: 2em;
 }
 
+.left-align-card {
+    width: 50%;
+    margin-top: 2em;
+}
+
 .fullpage-card {
     width: 90%;
     margin: auto
+}
+
+.card-title {
+    margin: auto; 
+    color: #141719;
 }
 
 .stack-container {
@@ -19,4 +30,17 @@
   
 .stack-container > * {
     width: 100%;
+}
+
+.list-title {
+    font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI';
+    text-decoration: none;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.cardinfo-title { 
+    color: #141719;
+    font-weight: bold;
+    margin-bottom: 5px;
 }

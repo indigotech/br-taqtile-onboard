@@ -9,4 +9,5 @@ export class Globals {
     readonly snackbarDuration = 1500;
     readonly localUserKey = "localUser";
     readonly localUserTokenKey = "localUserToken";
+    readonly userListUrl = "/users"
 }

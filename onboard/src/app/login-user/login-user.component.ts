@@ -34,6 +34,9 @@ export class LoginUserComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (this.loginService.isLoggedIn()){
+      this.router.navigateByUrl(this.globals.userListUrl)
+    }
   }
 
   getEmailErrorMsg() {
@@ -65,7 +68,7 @@ export class LoginUserComponent implements OnInit {
   onLoginSuccess(response: UserLoginResponse) {
     localStorage.setItem(this.globals.localUserKey, JSON.stringify(response.data.user));
     localStorage.setItem(this.globals.localUserTokenKey, response.data.token);
-    this.router.navigateByUrl("/users");
+    this.router.navigateByUrl(this.globals.userListUrl);
   }
 
   onLoginError(errorResponse) {
