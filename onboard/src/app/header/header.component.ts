@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../api/LoginService';
 import { Globals } from '../globals';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -8,14 +9,11 @@ import { Globals } from '../globals';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  userLoggedIn: boolean = false;
-
   constructor(private loginService: LoginService, private globals: Globals) {
 
   }
 
-  ngOnInit() {
-    this.userLoggedIn = this.loginService.isLoggedIn();
+  ngOnInit() { 
   }
 
 }

@@ -1,7 +1,14 @@
-<div class="list-title">Usuários</div>
+<div class="content-title">
+    Usuários 
+    <mat-progress-spinner diameter="20" mode="indeterminate" *ngIf="loadingUserList"></mat-progress-spinner>    
+</div>
 <mat-card *ngFor="let user of userList">
-  <div class="stack-container">
-    <h3 class="cardinfo-title">{{ user.name }}</h3> 
-    {{ user.role }}
-  </div>
+    <div class="stack-container">
+      <h3 class="cardinfo-title" [routerLink]="['/users/crud', user.id]">{{ user.name }}</h3> 
+      {{ user.role }}
+    </div>
 </mat-card>
+
+<button mat-fab class="fab">
+    <mat-icon aria-label="Button for register new users">add</mat-icon>
+</button>

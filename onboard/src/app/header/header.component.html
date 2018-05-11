@@ -1,1 +1,1 @@
-<mat-toolbar *ngIf="userLoggedIn" color="primary">{{ globals.appName }}</mat-toolbar>
+<mat-toolbar *ngIf="loginService.isLoggedIn" color="primary" class="header">{{ globals.appName }}</mat-toolbar>

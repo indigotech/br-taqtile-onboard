@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, HostListener } from '@angular/core';
 import { Globals } from './globals';
+import { LoginService } from '../api/LoginService';
+import { User } from './user';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +9,16 @@ import { Globals } from './globals';
   styleUrls: [ './app.component.css' ]
 })
 export class AppComponent {
-  constructor (private globals: Globals){ }
+  constructor (
+    private globals: Globals,
+    private loginService: LoginService
+  ){ }
+
+  @HostListener("window:beforeunload")
+  onClose(){    
+    let rememberMe = sessionStorage.getItem(this.globals.rememberMeKey);
+    if (rememberMe) {
+      this.loginService.saveUserSession();
+    }
+  }
 }

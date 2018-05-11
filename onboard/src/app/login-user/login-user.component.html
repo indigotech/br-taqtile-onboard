@@ -26,9 +26,9 @@
       <mat-error *ngIf="passwordError">{{getPasswordErrorMsg()}} </mat-error>
     </mat-form-field>
 
-    <mat-checkbox [(ngModel)]="user.rememberMe">Permanecer conectado</mat-checkbox>
-
-    <span class="login-span" style="margin-top: 2em;">Não tem uma conta? Cadastre-se aqui</span>
+    <mat-checkbox [(ngModel)]="user.rememberMe">
+      <span>Permanecer conectado</span>
+    </mat-checkbox>
   </div>
 
   <mat-card-actions align="end">

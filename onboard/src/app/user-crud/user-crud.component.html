@@ -1,0 +1,31 @@
+<div class="content-title">{{getOpName()}}</div>
+<mat-progress-spinner *ngIf="loadingUserList" diameter="20" mode="indeterminate"></mat-progress-spinner>
+
+<mat-card *ngIf="!loadingUserList">
+  <div class="stack-container">
+    <mat-form-field class="form-input">
+      <input matInput [(ngModel)]="user.name" placeholder="Nome">
+    </mat-form-field>
+
+    <mat-form-field class="form-input" *ngIf="!isEditing">
+      <input matInput [(ngModel)]="user.role" placeholder="Cargo">
+    </mat-form-field>
+
+    <mat-form-field class="form-input">
+      <input matInput [(ngModel)]="user.email" placeholder="E-mail" [formControl]="emailControl" (keyup.enter)="login()">
+      <mat-error *ngIf="emailError">{{getEmailErrorMsg()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="!isEditing">
+      <input matInput [(ngModel)]="user.password" placeholder="Senha" [type]="hidePassword ? 'password' : 'text'" [formControl]="passwordControl"
+        (keyup.enter)="login()">
+      <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+      <mat-error *ngIf="passwordError">{{getPasswordErrorMsg()}} </mat-error>
+    </mat-form-field>
+  </div>
+
+  <mat-card-actions >
+    <button mat-raised-button color="accent" align="end" *ngIf="!isEditing" (click)="addUser()">Adicionar</button>
+    <button mat-button color="accent" *ngIf="isEditing" (click)="backToUserList()">Voltar</button>
+  </mat-card-actions>
+</mat-card>

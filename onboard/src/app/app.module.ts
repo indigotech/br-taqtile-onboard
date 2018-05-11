@@ -14,10 +14,13 @@ import { UserListComponent } from './user-list/user-list.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HeaderComponent } from './header/header.component';
 import { WebInterceptor } from '../api/WebInterceptor';
+import { UserCrudComponent } from './user-crud/user-crud.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginUserComponent },  
   { path: 'users', component: UserListComponent },
+  { path: 'users/crud/:userId',  component: UserCrudComponent },
+  { path: 'users/crud',  component: UserCrudComponent  },
   { path: '**',  component: PageNotFoundComponent  }
 ];
 
@@ -27,7 +30,8 @@ const appRoutes: Routes = [
     LoginUserComponent,
     UserListComponent,
     PageNotFoundComponent,
-    HeaderComponent
+    HeaderComponent,
+    UserCrudComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

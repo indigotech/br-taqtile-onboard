@@ -6,6 +6,7 @@ import { UserLoginErrorResponse } from '../../api/response/UserLoginResponseErro
 import { UserLoginResponse } from '../../api/response/UserLoginResponse';
 import { Globals } from '../globals';
 import { Router } from '@angular/router';
+import { UserLogin } from '../../api/response/UserLogin';
 
 @Component({
   selector: 'app-login-user',
@@ -19,22 +20,19 @@ export class LoginUserComponent implements OnInit {
   passwordError = false;
   loggingIn = false;
   hidePassword = true;
-  rememberMe = false;
-  user = { 
-    email: "",
-    password: "",
-    rememberMe: this.rememberMe
-  };
+  user: UserLogin = {} as UserLogin;
 
   constructor(
     private loginService: LoginService, 
     private snackBar: MatSnackBar,
     private globals: Globals,
     private router: Router
-  ) { }
+  ) { 
+    this.user.rememberMe = false;
+  }
 
   ngOnInit() {
-    if (this.loginService.isLoggedIn()){
+    if (this.loginService.isLoggedIn){
       this.router.navigateByUrl(this.globals.userListUrl)
     }
   }
@@ -66,8 +64,9 @@ export class LoginUserComponent implements OnInit {
   }
 
   onLoginSuccess(response: UserLoginResponse) {
-    localStorage.setItem(this.globals.localUserKey, JSON.stringify(response.data.user));
-    localStorage.setItem(this.globals.localUserTokenKey, response.data.token);
+    sessionStorage.setItem(this.globals.rememberMeKey, JSON.stringify(this.user.rememberMe));
+    sessionStorage.setItem(this.globals.localUserKey, JSON.stringify(response.data.user));
+    sessionStorage.setItem(this.globals.localUserTokenKey, response.data.token);
     this.router.navigateByUrl(this.globals.userListUrl);
   }
 
