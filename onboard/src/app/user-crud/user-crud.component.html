@@ -9,7 +9,7 @@
 
     <mat-form-field>
       <input type="text" placeholder="Cargo" aria-label="Number" matInput [formControl]="roleControl" [matAutocomplete]="auto"
-        [ngModel]="user.role">
+        [(ngModel)]="user.role">
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let role of globals.userRoles" [value]="role">
           {{ role }}

@@ -26,15 +26,9 @@ export class WebInterceptor implements HttpInterceptor {
             error => this.onRequestError(error)
         );
         return next.handle(request);
-        // return next.handle(request).pipe(
-        //     catchError(error => this.onRequestError(error))
-        // );
     }
 
     onRequestError(error) {
-        console.log("onRequestError");
-        
-        this.loginService.isLoggedIn = false;
         if (error.status == 401){
             this.loginService.refreshSession();
         }

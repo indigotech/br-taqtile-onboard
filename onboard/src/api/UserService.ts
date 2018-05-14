@@ -30,6 +30,8 @@ export class UserService {
     }
 
     add(userAdd: UserAdd) {
+        console.log(userAdd);
+        
         return this.httpClient.post(this.userAddUrl, userAdd);
     }
 }

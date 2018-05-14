@@ -55,6 +55,7 @@ export class LoginService {
             this.login(localUser).subscribe(
                 response => { this.isLoggedIn = true; },
                 error => {
+                    this.isLoggedIn = false;
                     this.clearUserSession();
                     this.router.navigateByUrl(this.globals.loginUrl);
                 }
