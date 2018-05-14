@@ -6,7 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 //Angular Material imports
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatCardModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatIconModule, MatProgressSpinnerModule, MatCheckboxModule, MatSnackBarModule, MatToolbarModule } from '@angular/material';
+import { MatCardModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatIconModule, MatProgressSpinnerModule, MatCheckboxModule, MatSnackBarModule, MatToolbarModule, MatAutocompleteModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { LoginUserComponent } from './login-user/login-user.component';
@@ -49,6 +49,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     MatSnackBarModule,
     MatToolbarModule,
+    MatAutocompleteModule    
   ],
   providers: [
     {

@@ -7,9 +7,7 @@
 }
 
 .fab {
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
+    float: right;
 }
 
 .centered-card {

@@ -49,4 +49,8 @@ export class UserListComponent implements OnInit {
       )
     }
   }
+
+  addUser() {
+    this.router.navigateByUrl(this.globals.addUserUrl);
+  }
 }

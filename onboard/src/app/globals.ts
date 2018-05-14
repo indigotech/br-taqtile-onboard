@@ -17,5 +17,11 @@ export class Globals {
     //URLs
     readonly userListUrl = "/users"
     readonly loginUrl = "/";
+    readonly addUserUrl = "/users/crud"
+
+    userRoles = [
+        'admin',
+        'user'
+    ]
 
 }

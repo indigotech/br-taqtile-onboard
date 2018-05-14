@@ -4,11 +4,17 @@
 <mat-card *ngIf="!loadingUserList">
   <div class="stack-container">
     <mat-form-field class="form-input">
-      <input matInput [(ngModel)]="user.name" placeholder="Nome">
+      <input matInput [(ngModel)]="user.name" placeholder="Nome" [disabled]="isEditing">
     </mat-form-field>
 
-    <mat-form-field class="form-input" *ngIf="!isEditing">
-      <input matInput [(ngModel)]="user.role" placeholder="Cargo">
+    <mat-form-field>
+      <input type="text" placeholder="Cargo" aria-label="Number" matInput [formControl]="roleControl" [matAutocomplete]="auto"
+        [ngModel]="user.role">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let role of globals.userRoles" [value]="role">
+          {{ role }}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
 
     <mat-form-field class="form-input">
@@ -17,15 +23,14 @@
     </mat-form-field>
 
     <mat-form-field *ngIf="!isEditing">
-      <input matInput [(ngModel)]="user.password" placeholder="Senha" [type]="hidePassword ? 'password' : 'text'" [formControl]="passwordControl"
-        (keyup.enter)="login()">
+      <input matInput [(ngModel)]="user.password" placeholder="Senha" [type]="hidePassword ? 'password' : 'text'" (keyup.enter)="login()">
       <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
       <mat-error *ngIf="passwordError">{{getPasswordErrorMsg()}} </mat-error>
     </mat-form-field>
   </div>
 
-  <mat-card-actions >
-    <button mat-raised-button color="accent" align="end" *ngIf="!isEditing" (click)="addUser()">Adicionar</button>
-    <button mat-button color="accent" *ngIf="isEditing" (click)="backToUserList()">Voltar</button>
+  <mat-card-actions>
+    <button mat-button color="accent" (click)="backToUserList()">Voltar</button>
+    <button mat-raised-button color="accent" align="end" *ngIf="!isEditing" (click)="addUser()">{{isAddingUser ? "Adicionando..." : "Adicionar"}}</button>
   </mat-card-actions>
 </mat-card>
