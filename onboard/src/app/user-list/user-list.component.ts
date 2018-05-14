@@ -35,19 +35,7 @@ export class UserListComponent implements OnInit {
   }
 
   onLoadUserListError() {
-    let localUser: UserLogin = this.loginService.getLocalUser();
-    if (localUser == null) {
-      this.router.navigateByUrl(this.globals.loginUrl);
-    }
-    else {
-      this.loginService.login(localUser).subscribe(
-        response => { },
-        error => { 
-          this.loginService.clearUserSession();
-          this.router.navigateByUrl(this.globals.loginUrl); 
-        }
-      )
-    }
+
   }
 
   addUser() {

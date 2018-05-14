@@ -64,9 +64,11 @@ export class LoginUserComponent implements OnInit {
   }
 
   onLoginSuccess(response: UserLoginResponse) {
-    sessionStorage.setItem(this.globals.rememberMeKey, JSON.stringify(this.user.rememberMe));
     sessionStorage.setItem(this.globals.localUserKey, JSON.stringify(response.data.user));
     sessionStorage.setItem(this.globals.localUserTokenKey, response.data.token);
+    if (this.user.rememberMe) {
+      this.loginService.saveUserSession();
+    }        
     this.router.navigateByUrl(this.globals.userListUrl);
   }
 

@@ -3,6 +3,8 @@ import { UserLoginResponse } from "./response/UserLoginResponse";
 import { HttpClient } from "@angular/common/http";
 import { Globals } from "../app/globals";
 import { Observable } from "rxjs";
+import { UserLogin } from "./response/UserLogin";
+import { Router } from "@angular/router";
 
 
 @Injectable({
@@ -12,30 +14,28 @@ export class LoginService {
     isLoggedIn: boolean;
     private readonly loginUrl: string;
 
-    constructor(private httpClient: HttpClient, private globals: Globals){
-        this.loginUrl = globals.apiUrl + "/authenticate";
-        this.isLoggedIn = sessionStorage.getItem(this.globals.localUserKey) != null;
+    constructor(private httpClient: HttpClient, private globals: Globals, private router: Router) {
+        this.loginUrl = globals.apiUrl + globals.authenticateUrl;
     }
 
     login(body) {
         let loginObservable = this.httpClient.post<UserLoginResponse>(this.loginUrl, body);
-        loginObservable.subscribe(
-            success => { this.isLoggedIn = true; },
-            error => { this.isLoggedIn = false; }
-        );
         return loginObservable;
     }
 
     getLocalUser() {
-        return sessionStorage[this.globals.localUserKey];
+        let user = sessionStorage.getItem(this.globals.localUserKey);
+        return user != null ? user : localStorage.getItem(this.globals.localUserKey);
     }
 
     getLocalUserToken() {
-        return sessionStorage[this.globals.localUserTokenKey];        
+        let token = sessionStorage.getItem(this.globals.localUserTokenKey);
+        return token != null ? token : localStorage.getItem(this.globals.localUserTokenKey);
     }
 
     clearUserSession() {
         sessionStorage.clear();
+        localStorage.clear();
         localStorage.removeItem(this.globals.localUserKey);
         localStorage.removeItem(this.globals.localUserTokenKey);
     }
@@ -43,5 +43,22 @@ export class LoginService {
     saveUserSession() {
         localStorage.setItem(this.globals.localUserKey, sessionStorage.getItem(this.globals.localUserKey));
         localStorage.setItem(this.globals.localUserTokenKey, sessionStorage.getItem(this.globals.localUserTokenKey));
+    }
+
+    refreshSession() {
+        let localUser: UserLogin = JSON.parse(this.getLocalUser());
+        this.clearUserSession();
+        if (localUser == null) {
+            this.router.navigateByUrl(this.globals.loginUrl);
+        }
+        else {
+            this.login(localUser).subscribe(
+                response => { this.isLoggedIn = true; },
+                error => {
+                    this.clearUserSession();
+                    this.router.navigateByUrl(this.globals.loginUrl);
+                }
+            );
+        }
     }
 }
