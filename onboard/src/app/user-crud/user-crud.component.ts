@@ -18,7 +18,7 @@ export class UserCrudComponent implements OnInit {
   private loadingUserInfo: boolean;
   private isEditing: boolean;
   private emailControl = new FormControl('', [Validators.required, Validators.email]);
-  private roleControl =  new FormControl();
+  private roleControl = new FormControl();
   private hidePassword = true;
   private isAddingUser = false;
 
@@ -31,10 +31,9 @@ export class UserCrudComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.user.id = new Number(this.route.snapshot.paramMap.get(this.globals.userIdParamKey)).valueOf();
-    this.isEditing = this.user.id > 0;
-
+    this.isEditing = this.route.snapshot.paramMap.has(this.globals.userIdParamKey);
     if (this.isEditing) {
+      this.user.id = new Number(this.route.snapshot.paramMap.get(this.globals.userIdParamKey)).valueOf();
       this.loadUserInfo();
       this.emailControl.disable();
       this.roleControl.disable();
@@ -51,34 +50,30 @@ export class UserCrudComponent implements OnInit {
 
   onLoadUserInfoSuccess(response) {
     this.loadingUserInfo = false;
-    this.user = response.data; 
+    this.user = response.data;
   }
 
   onLoadUserInfoError(error) {
     this.loadingUserInfo = false;
-    this.snackBar.open("Não foi possível carregar os dados do usuário", null, {duration: this.globals.snackbarDuration});
+    this.snackBar.open("Não foi possível carregar os dados do usuário", null, { duration: this.globals.snackbarDuration });
     this.backToUserList();
   }
 
   addUser() {
     this.isAddingUser = true;
-    console.log("User", this.user);
-    
     this.userService.add(this.user).subscribe(
-      response => { this.onAddUserSuccess(response);  },
+      response => { this.onAddUserSuccess(response); },
       error => { this.onAddUserError(error); }
     )
   }
 
   onAddUserSuccess(response) {
     this.isAddingUser = false;
-    this.snackBar.open("Usuário adicionado :)", null, { duration: this.globals.snackbarDuration }); 
+    this.snackBar.open("Usuário adicionado :)", null, { duration: this.globals.snackbarDuration });
     this.backToUserList();
   }
 
   onAddUserError(error) {
-    console.log(error);
-    
     this.isAddingUser = false;
     this.snackBar.open("Não foi possivel adicionar o usuário", null, { duration: this.globals.snackbarDuration });
   }
@@ -89,7 +84,7 @@ export class UserCrudComponent implements OnInit {
 
   getEmailErrorMsg() {
     return this.emailControl.hasError('required') ? 'Digite seu e-mail' :
-        this.emailControl.hasError('email') ? 'E-mail inválido' :
+      this.emailControl.hasError('email') ? 'E-mail inválido' :
         '';
   }
 
