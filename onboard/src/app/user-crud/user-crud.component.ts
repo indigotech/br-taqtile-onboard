@@ -42,15 +42,15 @@ export class UserCrudComponent implements OnInit {
 
   loadUserInfo() {
     this.loadingUserInfo = true;
-    this.userService.getUserInfo(this.user.id).subscribe(
-      response => { this.onLoadUserInfoSuccess(response) },
+    this.userService.getUserInfoAsync(this.user.id).subscribe(
+      userData => { this.onLoadUserInfoSuccess(userData) },
       error => { this.onLoadUserInfoError(error); }
     );
   }
 
-  onLoadUserInfoSuccess(response) {
+  onLoadUserInfoSuccess(userData) {
     this.loadingUserInfo = false;
-    this.user = response.data;
+    this.user = userData;
   }
 
   onLoadUserInfoError(error) {
@@ -61,7 +61,7 @@ export class UserCrudComponent implements OnInit {
 
   addUser() {
     this.isAddingUser = true;
-    this.userService.add(this.user).subscribe(
+    this.userService.addAsync(this.user).subscribe(
       response => { this.onAddUserSuccess(response); },
       error => { this.onAddUserError(error); }
     )

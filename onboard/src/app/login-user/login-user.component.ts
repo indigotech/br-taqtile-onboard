@@ -57,15 +57,16 @@ export class LoginUserComponent implements OnInit {
     }
     
     this.loggingIn = true;
-    this.loginService.login(this.user).subscribe(
-      response => { this.onLoginSuccess(response) },
+    this.loginService.loginAsync(this.user).subscribe(
+      data => { this.onLoginSuccess(data) },
       error => { this.onLoginError(error) }
     );
   }
 
-  onLoginSuccess(response: UserLoginResponse) {
-    sessionStorage.setItem(this.globals.localUserKey, JSON.stringify(response.data.user));
-    sessionStorage.setItem(this.globals.localUserTokenKey, response.data.token);
+  onLoginSuccess(data) {
+    this.loginService.isLoggedIn = true;
+    sessionStorage.setItem(this.globals.localUserKey, JSON.stringify(data.user));
+    sessionStorage.setItem(this.globals.localUserTokenKey, data.token);
     if (this.user.rememberMe) {
       this.loginService.saveUserSession();
     }        

@@ -5,6 +5,7 @@ import { User } from "../app/user";
 import { UserListResponse } from "./response/UserListResponse";
 import { UserInfoResponse } from "./response/UserInfoResponse";
 import { UserAdd } from "./response/UserAdd";
+import { map } from "rxjs/operators";
 
 
 @Injectable({
@@ -21,15 +22,17 @@ export class UserService {
         this.userAddUrl = globals.apiUrl + "/users";
     }
 
-    getUserList() {
+    getUserListAsync() {
         return this.httpClient.get<UserListResponse>(this.userListUrl);        
     }
 
-    getUserInfo(userId: number) {
-        return this.httpClient.get<UserInfoResponse>(this.userInfoUrl.replace(":userId", userId.toString()));
+    getUserInfoAsync(userId: number) {
+        return this.httpClient.get<UserInfoResponse>(this.userInfoUrl.replace(":userId", userId.toString())).pipe(
+            map(response => response.data)
+        );
     }
 
-    add(userAdd: UserAdd) {
+    addAsync(userAdd: UserAdd) {
         return this.httpClient.post(this.userAddUrl, userAdd);
     }
 }
