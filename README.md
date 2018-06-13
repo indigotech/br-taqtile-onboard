@@ -6,17 +6,18 @@ Base repository used to create Taqtile's Onboard projects
 
 First of all, welcome to Taqtile!
 
-We will start this journey to help you become more familiar with our current Stack by proposing a simple project. Regardless of the technology you'll be using, the project remains the same with a few modifications.
+To help you become more familiar with our current stack, we are proposing a simple project. 
+Regardless of the technology you'll be using, the project remains the same with a few modifications.
 
-# This onboard project
+# Onboard project
 
-The project consists of 4 major features:
+The onboard project consists of 4 major features:
 
 - login
 - user list
 - the detail of an user
 - adding a new user
 
-Each feature are broken in one or more tasks, described in the issues of this repository.
+We created some **issues** in this project to guide and help you to get all this features done.
 
 So... let's get started!
