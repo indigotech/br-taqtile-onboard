@@ -1,0 +1,14 @@
+<div class="content-title">
+    Usuários 
+    <mat-progress-spinner diameter="20" mode="indeterminate" *ngIf="loadingUserList"></mat-progress-spinner>   
+</div>
+<mat-card *ngFor="let user of userList">
+    <div class="stack-container">
+      <h3 class="cardinfo-title" [routerLink]="['/users/crud', user.id]" style="cursor: pointer;">{{ user.name }}</h3> 
+      {{ user.role }}
+    </div>
+</mat-card>
+<div style="margin-top: 10px"></div>
+<button mat-fab class="fab" (click)="addUser()">
+    <mat-icon aria-label="Button for register new users">add</mat-icon>
+</button> 

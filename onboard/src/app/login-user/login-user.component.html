@@ -1,0 +1,38 @@
+<mat-card class="centered-card" >
+  <mat-card-header>
+    <h2 class="card-title">Login</h2>
+  </mat-card-header>
+
+  <div class="stack-container">
+    <mat-form-field style="margin-bottom: 10px;">
+      <input 
+        matInput 
+        [(ngModel)]="user.email" 
+        placeholder="E-mail" 
+        [formControl]="emailControl"
+        (keyup.enter)="login()">
+      <mat-error *ngIf="emailError">{{getEmailErrorMsg()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input 
+        matInput 
+        [(ngModel)]="user.password" 
+        placeholder="Senha" 
+        [type]="hidePassword ? 'password' : 'text'" 
+        [formControl]="passwordControl"
+        (keyup.enter)="login()">
+      <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+      <mat-error *ngIf="passwordError">{{getPasswordErrorMsg()}} </mat-error>
+    </mat-form-field>
+
+    <mat-checkbox [(ngModel)]="user.rememberMe">
+      <span>Permanecer conectado</span>
+    </mat-checkbox>
+  </div>
+
+  <mat-card-actions align="end">
+    <mat-progress-spinner diameter="30" mode="indeterminate" *ngIf="loggingIn"></mat-progress-spinner>
+    <button mat-raised-button color="accent" (click)="login()">{{loggingIn ? "Entrando..." : "Entrar"}}</button>
+  </mat-card-actions>
+</mat-card>
